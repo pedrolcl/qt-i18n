@@ -1,10 +1,8 @@
 # Qt5 Internationalization with CMake and Qmake
 
-This project is a template of a Qt5 application using 
+This project is a tutorial and sample project of a Qt5 application using 
 [internationalization](https://doc.qt.io/qt-5/internationalization.html), 
-with translations embedded inside the executable as resources.
-
-Both CMake and Qmake build systems are included.
+with translations embedded inside the executable as resources. Both CMake and Qmake build systems are included.
 
 ## Loading and installing translations in C++
 
@@ -23,8 +21,8 @@ This is an excerpt from the `main.cpp` file in the project:
 
 Two instances of [QTranslator](https://doc.qt.io/qt-5/qtranslator.html) are created. 
 The first instance loads the Qt5 translations. The second one loads the program 
-translations. Both instances load() the QM files corresponding to the default `QLocale` 
-that is created without arguments. You may use environment variables to change the default
+translations. Both instances `load()` the QM files corresponding to the default `QLocale` 
+that is created without arguments. You may want to use environment variables to change the default
 system locale:
 
     LANGUAGE=ca_ES
@@ -120,5 +118,4 @@ translations from the project sources and using the command line shell:
 
     $ cmake --build . --target lupdate
 
-Copyright © 2019 Pedro López-Cabanillas <plcl@users.sf.net>. 
-See the LICENSE file for details.
+Copyright © 2019 Pedro López-Cabanillas.  See the LICENSE file for details.
