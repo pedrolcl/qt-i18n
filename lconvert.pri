@@ -1,4 +1,4 @@
-# Copyright © 2019 Pedro López-Cabanillas <plcl@users.sf.net>
+# Copyright © 2019-2021 Pedro López-Cabanillas <plcl@users.sf.net>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -37,7 +37,7 @@ for(lang, LCONVERT_LANGS) {
         lang_files += $$files($$[QT_INSTALL_TRANSLATIONS]/$${pat}_$${lang}.qm)
     }
     outfile = $$OUT_PWD/qt_$${lang}.qm
-    system($$LCONVERT -i $$join(lang_files, ' ') -o $$outfile): LCONVERT_OUTPUTS += $$outfile
+    !isEmpty(lang_files): system("$$LCONVERT -i $$join(lang_files, ' ') -o $$outfile"): LCONVERT_OUTPUTS += $$outfile
 }
 qm_res.files = $$LCONVERT_OUTPUTS
 qm_res.base = $$OUT_PWD

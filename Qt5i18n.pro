@@ -1,4 +1,4 @@
-# Copyright © 2019 Pedro López-Cabanillas <plcl@users.sf.net>
+# Copyright © 2019-2021 Pedro López-Cabanillas <plcl@users.sf.net>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions

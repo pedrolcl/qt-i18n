@@ -1,5 +1,5 @@
 #=======================================================================
-# Copyright © 2019 Pedro López-Cabanillas <plcl@users.sf.net>
+# Copyright © 2019-2021 Pedro López-Cabanillas <plcl@users.sf.net>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -29,11 +29,11 @@
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #=======================================================================
 
-if (NOT TARGET Qt5::lconvert)
-    message(FATAL_ERROR "The package \"Qt5LinguistTools\" is required.")
+if (NOT TARGET Qt${QT_VERSION_MAJOR}::lconvert)
+    message(FATAL_ERROR "The package \"Qt${QT_VERSION_MAJOR}LinguistTools\" is required.")
 endif()
 
-set(Qt5_LCONVERT_EXECUTABLE Qt5::lconvert)
+set(Qt_LCONVERT_EXECUTABLE Qt${QT_VERSION_MAJOR}::lconvert)
 
 function(ADD_APP_TRANSLATIONS_RESOURCE res_file)
     set(_qm_files ${ARGN})
@@ -53,7 +53,7 @@ function(ADD_QT_TRANSLATIONS_RESOURCE res_file)
     set(_languages ${ARGN})
     set(_res_file ${CMAKE_CURRENT_BINARY_DIR}/qt_translations.qrc)
     set(_patterns qtbase qtmultimedia qtscript qtxmlpatterns)
-    get_filename_component(_srcdir "${Qt5_DIR}/../../../translations" ABSOLUTE)
+    get_filename_component(_srcdir "${Qt${QT_VERSION_MAJOR}_DIR}/../../../translations" ABSOLUTE)
     set(_outfiles)
     foreach(_lang ${_languages})
         set(_infiles)
@@ -66,7 +66,7 @@ function(ADD_QT_TRANSLATIONS_RESOURCE res_file)
         endforeach()
         if(_infiles)
             add_custom_command(OUTPUT ${_out}
-                COMMAND ${Qt5_LCONVERT_EXECUTABLE}
+                COMMAND ${Qt_LCONVERT_EXECUTABLE}
                 ARGS -i ${_infiles} -o ${_out}
                 COMMAND_EXPAND_LISTS VERBATIM)
             list(APPEND _outfiles ${_out})
@@ -82,7 +82,7 @@ function(ADD_QT_TRANSLATIONS_RESOURCE res_file)
 endfunction()
 
 add_custom_target(lupdate
-    COMMAND ${Qt5_LUPDATE_EXECUTABLE} -recursive . -ts *.ts
+    COMMAND ${Qt${QT_VERSION_MAJOR}_LUPDATE_EXECUTABLE} -recursive . -ts *.ts
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     COMMENT "Updating translations"
 )

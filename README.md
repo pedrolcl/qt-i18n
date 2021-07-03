@@ -1,6 +1,6 @@
-# Qt5 Internationalization with CMake and Qmake
+# Qt5/Qt6 Internationalization with CMake and Qmake
 
-This project is a tutorial and sample project of a Qt5 application using 
+This project is a tutorial and sample project of a Qt application using 
 [internationalization](https://doc.qt.io/qt-5/internationalization.html), 
 with translations embedded inside the executable as resources. Both CMake and Qmake build systems are included.
 
@@ -20,10 +20,10 @@ This is an excerpt from the `main.cpp` file in the project:
     QCoreApplication::installTranslator(&appTranslator);
 
 Two instances of [QTranslator](https://doc.qt.io/qt-5/qtranslator.html) are created. 
-The first instance loads the Qt5 translations. The second one loads the program 
+The first instance loads the Qt translations. The second one loads the program 
 translations. Both instances `load()` the QM files corresponding to the default `QLocale` 
-that is created without arguments. You may want to use environment variables to change the default
-system locale:
+that is created without arguments. You may want to use environment variables on Linux to change the 
+default system locale:
 
     LANGUAGE=ca_ES
     LC_CTYPE=ca_ES.UTF-8
@@ -58,8 +58,8 @@ The undocumented variable `LRELEASE_DIR` determine the output directory of the *
 (relative to the project's output). and `QM_FILES_RESOURCE_PREFIX` determine the prefix used by 
 the compiled resources. You need this prefix when loading the translations in your *.cpp sources.
 
-The only missing spots are the Qt5 translations, the translations of Widgets 
-and other classes shipped by Qt5. `lconvert.pri` is the only custom script 
+The only missing spots are the Qt translations, the translations of Widgets 
+and other classes shipped by Qt. `lconvert.pri` is the only custom script 
 provided by this recipe.
 
     LCONVERT_LANGS=es ca gl eu
@@ -71,11 +71,12 @@ by default: `qtbase`, `qtmultimedia`, `qtscript` and `qtxmlpatterns`.
 
 ## Using the CMake build system
 
-Qt5 provides already a CMake function to build translations in the 
+Qt provides already a CMake function to build translations in the 
 [LinguistTools module](https://doc.qt.io/qt-5/cmake-command-reference.html#qt5-linguisttools)
 that you only need to request it along with other modules in your `CMakeLists.txt`
 
-    find_package(Qt5 COMPONENTS Core Gui Widgets LinguistTools REQUIRED)
+    find_package(QT NAMES Qt6 Qt5 REQUIRED)
+    find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Widgets LinguistTools REQUIRED)
 
     set(TS_FILES
         i18n_ca.ts
@@ -111,11 +112,11 @@ include in your project to use the new macros.
 
 The `add_app_translations_resource()` function produces the resource.qrc file from your 
 `${QM_FILES}`, and the `add_qt_translations_resource()` produces another resource file for the
-requested languages and the Qt5 provided translation files.
+requested languages and the Qt provided translation files.
 
 Finally, there is also a `lupdate` custom target, in case you need to update your sources
 translations from the project sources and using the command line shell:
 
     $ cmake --build . --target lupdate
 
-Copyright © 2019 Pedro López-Cabanillas.  See the LICENSE file for details.
+Copyright © 2019-2021 Pedro López-Cabanillas.  See the LICENSE file for details.
