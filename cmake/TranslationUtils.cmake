@@ -1,5 +1,5 @@
 #=======================================================================
-# Copyright © 2019-2021 Pedro López-Cabanillas <plcl@users.sf.net>
+# Copyright © 2019-2022 Pedro López-Cabanillas <plcl@users.sf.net>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -82,7 +82,7 @@ function(ADD_QT_TRANSLATIONS_RESOURCE res_file)
 endfunction()
 
 add_custom_target(lupdate
-    COMMAND ${Qt${QT_VERSION_MAJOR}_LUPDATE_EXECUTABLE} -recursive . -ts *.ts
-    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    COMMAND ${Qt${QT_VERSION_MAJOR}_LUPDATE_EXECUTABLE} -recursive ${PROJECT_SOURCE_DIR} -ts *.ts
+    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Updating translations"
 )

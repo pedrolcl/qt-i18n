@@ -1,7 +1,7 @@
 # Qt5/Qt6 Internationalization with CMake and Qmake
 
 This project is a tutorial and sample project of a Qt application using 
-[internationalization](https://doc.qt.io/qt-5/internationalization.html), 
+[internationalization](https://doc.qt.io/qt/internationalization.html), 
 with translations embedded inside the executable as resources. Both CMake and Qmake build systems are included.
 
 ## Loading and installing translations in C++
@@ -19,7 +19,7 @@ This is an excerpt from the `main.cpp` file in the project:
              << appTranslator.load(locale, "i18n", "_", ":/");
     QCoreApplication::installTranslator(&appTranslator);
 
-Two instances of [QTranslator](https://doc.qt.io/qt-5/qtranslator.html) are created. 
+Two instances of [QTranslator](https://doc.qt.io/qt/qtranslator.html) are created. 
 The first instance loads the Qt translations. The second one loads the program 
 translations. Both instances `load()` the QM files corresponding to the default `QLocale` 
 that is created without arguments. You may want to use environment variables on Linux to change the 
@@ -31,7 +31,7 @@ default system locale:
 ## Using the Qmake build system
 
 The translations are declared in the project.pro file as usual using the variables `TRANSLATIONS` and 
-[EXTRA_TRANSLATIONS](https://doc.qt.io/qt-5/qmake-variable-reference.html#extra-translations). 
+[EXTRA_TRANSLATIONS](https://doc.qt.io/qt/qmake-variable-reference.html#extra-translations). 
 I'm declaring here four of the languages spoken in my country.
 
     TRANSLATIONS += \
@@ -41,7 +41,7 @@ I'm declaring here four of the languages spoken in my country.
         i18n_gl.ts
 
 The creation and maintenance of the language translations can be done directly from the command line 
-shell with the help of the [lupdate utility](https://doc.qt.io/qt-5/linguist-manager.html):
+shell with the help of the [lupdate utility](https://doc.qt.io/qt/linguist-manager.html):
 
     $ lupdate project.pro
 
@@ -51,7 +51,7 @@ To generate the *.qm binary files and the *.qrc resources, there are already sta
     LRELEASE_DIR=.
     QM_FILES_RESOURCE_PREFIX=/
     
-Including in the `CONFIG` variable the configuration [options](https://doc.qt.io/qt-5/qmake-variable-reference.html#config) 
+Including in the `CONFIG` variable the configuration [options](https://doc.qt.io/qt/qmake-variable-reference.html#config) 
 `lrelease` and `embed_translations`, the translations are compiled and the resources generated at build time. 
 The undocumented variable `LRELEASE_DIR` determine the output directory of the *.qm files 
 (relative to the project's output). and `QM_FILES_RESOURCE_PREFIX` determine the prefix used by 
@@ -69,8 +69,8 @@ by default: `qtbase`, `qtmultimedia`, `qtscript` and `qtxmlpatterns`.
 
 ## Using the CMake build system
 
-Qt provides already a CMake function to build translations in the 
-[LinguistTools module](https://doc.qt.io/qt-5/cmake-command-reference.html#qt5-linguisttools) 
+Qt provides already a CMake function to build translations in the
+[LinguistTools module](https://doc.qt.io/qt/cmake-command-reference.html#qt6-linguisttools)
 that you only need to request it along with other modules in your `CMakeLists.txt`
 
     find_package(QT NAMES Qt6 Qt5 REQUIRED)
@@ -83,15 +83,16 @@ that you only need to request it along with other modules in your `CMakeLists.tx
         i18n_gl.ts
     )
 
-    qt5_add_translation(QM_FILES ${TS_FILES})
+    qt_add_translation(QM_FILES ${TS_FILES})
 
 Please see the documentation of the 
-[qt5_add_translation](https://doc.qt.io/qt-5/qtlinguist-cmake-qt5-add-translation.html) 
+[qt_add_translation](https://doc.qt.io/qt/qtlinguist-cmake-qt-add-translation.html) 
 function for details and available options.
 
-The LinguistTools module provides also a 
-[qt5-create-translation](https://doc.qt.io/qt-5/qtlinguist-cmake-qt5-create-translation.html) 
-function that is not used in this tutorial.
+The LinguistTools cmake module provides also a
+[qt-create-translation](https://doc.qt.io/qt/qtlinguist-cmake-qt-create-translation.html) 
+function that is not used in this tutorial. *Warning:* this function is known to be buggy, and may
+cause translators' work loss [when running the 'clean' target](https://bugreports.qt.io/browse/QTBUG-96549).
 
 You may include the variable `${QM_FILES}` directly in the list of sources for your target, 
 and install the *.qm files as always. But instead, we are going to embed the translations 
@@ -116,5 +117,8 @@ Finally, there is also a `lupdate` custom target, in case you need to update you
 translations from the project sources and using the command line shell:
 
     $ cmake --build . --target lupdate
+or, using GNU Make:
 
-Copyright © 2019-2021 Pedro López-Cabanillas.  See the LICENSE file for details.
+    $ make lupdate
+
+Copyright © 2019-2022 Pedro López-Cabanillas.  See the LICENSE file for details.
