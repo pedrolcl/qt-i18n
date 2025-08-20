@@ -1,5 +1,5 @@
 #=======================================================================
-# Copyright © 2019-2022 Pedro López-Cabanillas <plcl@users.sf.net>
+# Copyright © 2019-2025 Pedro López-Cabanillas <plcl@users.sf.net>
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -34,6 +34,7 @@ if (NOT TARGET Qt${QT_VERSION_MAJOR}::lconvert)
 endif()
 
 set(Qt_LCONVERT_EXECUTABLE Qt${QT_VERSION_MAJOR}::lconvert)
+set(Qt_LUPDATE_EXECUTABLE Qt${QT_VERSION_MAJOR}::lupdate)
 
 function(ADD_APP_TRANSLATIONS_RESOURCE res_file)
     set(_qm_files ${ARGN})
@@ -82,7 +83,7 @@ function(ADD_QT_TRANSLATIONS_RESOURCE res_file)
 endfunction()
 
 add_custom_target(lupdate
-    COMMAND ${Qt${QT_VERSION_MAJOR}_LUPDATE_EXECUTABLE} -recursive ${PROJECT_SOURCE_DIR} -ts *.ts
+    COMMAND ${Qt_LUPDATE_EXECUTABLE} -recursive ${PROJECT_SOURCE_DIR} -ts *.ts
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
     COMMENT "Updating translations"
 )
